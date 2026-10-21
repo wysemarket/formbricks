@@ -19,7 +19,8 @@ FROM node:24-alpine3.23 AS base
 FROM base AS installer
 
 # Enable corepack and prepare pnpm
-RUN npm install --ignore-scripts -g corepack@0.35.0
+RUN --mount=type=cache,target=/root/.npm \
+    npm install --ignore-scripts -g corepack@0.35.0
 RUN corepack enable
 RUN corepack prepare pnpm@11.7.0 --activate
 
@@ -35,7 +36,7 @@ ARG NODE_OPTIONS="--max_old_space_size=8192"
 ENV NODE_OPTIONS=${NODE_OPTIONS}
 
 # Target architecture - automatically provided by Docker in multi-platform builds
-# but needs explicit declaration for some build systems (like Depot)
+# but needs explicit declaration for some build systems
 ARG TARGETARCH
 
 # Base path for the application (optional)
@@ -57,7 +58,8 @@ COPY . .
 RUN touch apps/web/.env
 
 # Install the dependencies
-RUN pnpm install --ignore-scripts --frozen-lockfile
+RUN --mount=type=cache,target=/root/.local/share/pnpm/store \
+    pnpm install --ignore-scripts --frozen-lockfile
 
 # Build the database package first. `pnpm generate` loads prisma.config.ts, which
 # resolves DATABASE_URL via Prisma's env() helper and throws when it is unset. Mount

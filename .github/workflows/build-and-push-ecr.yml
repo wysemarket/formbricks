@@ -45,8 +45,6 @@ on:
     secrets:
       AWS_ECR_PUSH_ROLE_ARN:
         required: true
-      DEPOT_PROJECT_TOKEN:
-        required: true
       DUMMY_DATABASE_URL:
         required: false
       DUMMY_ENCRYPTION_KEY:
@@ -91,7 +89,7 @@ env:
 jobs:
   build-and-push:
     name: Build and Push
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     timeout-minutes: 45
     outputs:
       IMAGE_TAG: ${{ steps.build.outputs.image_tag }}
@@ -121,7 +119,6 @@ jobs:
           is_prerelease: ${{ inputs.IS_PRERELEASE }}
           make_latest: ${{ inputs.MAKE_LATEST }}
         env:
-          DEPOT_PROJECT_TOKEN: ${{ secrets.DEPOT_PROJECT_TOKEN }}
           DUMMY_DATABASE_URL: ${{ secrets.DUMMY_DATABASE_URL }}
           DUMMY_ENCRYPTION_KEY: ${{ secrets.DUMMY_ENCRYPTION_KEY }}
           DUMMY_REDIS_URL: ${{ secrets.DUMMY_REDIS_URL }}

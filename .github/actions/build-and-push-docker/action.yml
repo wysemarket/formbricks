@@ -156,6 +156,7 @@ runs:
         registry: ${{ inputs.registry_type == 'ghcr' && 'ghcr.io' || '' }}
         setup_cosign: ${{ inputs.registry_type == 'ghcr' && 'true' || 'false' }}
         skip_login_on_pr: ${{ inputs.registry_type == 'ghcr' && 'true' || 'false' }}
+        cache_key: ${{ inputs.dockerfile }}
 
     - name: Build ECR tag list
       if: ${{ inputs.registry_type == 'ecr' }}
@@ -285,10 +286,8 @@ runs:
 
     - name: Build and push Docker image
       id: build
-      uses: depot/build-push-action@636daae76684e38c301daa0c5eca1c095b24e780 # v1.14.0
+      uses: useblacksmith/build-push-action@v2
       with:
-        project: tw0fqmsx3c
-        token: ${{ env.DEPOT_PROJECT_TOKEN }}
         context: ${{ inputs.context }}
         file: ${{ inputs.dockerfile }}
         platforms: linux/amd64,linux/arm64
@@ -307,7 +306,6 @@ runs:
           sentry_auth_token=${{ env.SENTRY_AUTH_TOKEN }}
           posthog_key=${{ env.POSTHOG_KEY }}
       env:
-        DEPOT_PROJECT_TOKEN: ${{ env.DEPOT_PROJECT_TOKEN }}
         DUMMY_DATABASE_URL: ${{ env.DUMMY_DATABASE_URL }}
         DUMMY_ENCRYPTION_KEY: ${{ env.DUMMY_ENCRYPTION_KEY }}
         DUMMY_REDIS_URL: ${{ env.DUMMY_REDIS_URL }}

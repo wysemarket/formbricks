@@ -20,7 +20,7 @@ permissions:
 jobs:
   build-community-testing:
     name: Build Community Testing Image
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-2vcpu-ubuntu-2404
     timeout-minutes: 45
 
     steps:
@@ -43,7 +43,6 @@ jobs:
           version: ${{ inputs.version_override }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DEPOT_PROJECT_TOKEN: ${{ secrets.DEPOT_PROJECT_TOKEN }}
           DUMMY_DATABASE_URL: ${{ secrets.DUMMY_DATABASE_URL }}
           DUMMY_ENCRYPTION_KEY: ${{ secrets.DUMMY_ENCRYPTION_KEY }}
           DUMMY_REDIS_URL: ${{ secrets.DUMMY_REDIS_URL }}
