@@ -15,7 +15,7 @@ permissions:
 jobs:
   validate-authzed-compose:
     name: Validate AuthZed Compose
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER == 'github' && 'ubuntu-24.04' || 'blacksmith-2vcpu-ubuntu-2404' }}
     timeout-minutes: 30
     permissions:
       contents: read
@@ -68,7 +68,7 @@ jobs:
 
   validate-docker-build:
     name: Validate Docker Build
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER == 'github' && 'ubuntu-24.04' || 'blacksmith-2vcpu-ubuntu-2404' }}
     permissions:
       contents: read
 

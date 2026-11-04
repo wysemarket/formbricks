@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   check-pr-size:
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER == 'github' && 'ubuntu-24.04' || 'blacksmith-2vcpu-ubuntu-2404' }}
     timeout-minutes: 10
 
     steps:

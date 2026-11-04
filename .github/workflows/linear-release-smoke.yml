@@ -38,7 +38,7 @@ permissions:
 jobs:
   linear-release-smoke:
     name: Dry-run the Linear release flow
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER == 'github' && 'ubuntu-24.04' || 'blacksmith-2vcpu-ubuntu-2404' }}
     timeout-minutes: 5
     # Belt to the trigger's braces: a workflow_dispatch runs the file as it exists on the ref
     # the caller chose, so the key must not be handed to a branch's copy of these steps.
