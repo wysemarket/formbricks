@@ -28,7 +28,7 @@ permissions:
 jobs:
   build:
     name: Run E2E Tests
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER == 'github' && 'ubuntu-24.04' || 'blacksmith-2vcpu-ubuntu-2404' }}
     # Chosen so the step timeouts below always fire FIRST, because a step timeout names
     # the culprit while a job timeout just says "exceeded the maximum execution time" —
     # the opaque symptom this workflow is being changed to eliminate.

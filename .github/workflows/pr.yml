@@ -55,7 +55,7 @@ jobs:
 
   validate-authzed-schema:
     name: Validate AuthZed Schema
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER == 'github' && 'ubuntu-24.04' || 'blacksmith-2vcpu-ubuntu-2404' }}
     timeout-minutes: 10
     permissions:
       contents: read
@@ -96,7 +96,7 @@ jobs:
         api-v3-contract-tests,
       ]
     if: always()
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER == 'github' && 'ubuntu-24.04' || 'blacksmith-2vcpu-ubuntu-2404' }}
     permissions:
       contents: read
       checks: write

@@ -31,7 +31,7 @@ permissions:
 jobs:
   contract-tests:
     name: v3 OpenAPI contract tests
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER == 'github' && 'ubuntu-24.04' || 'blacksmith-2vcpu-ubuntu-2404' }}
     timeout-minutes: 25
     services:
       # Same pinned images as e2e.yml so both jobs exercise the same engine versions.

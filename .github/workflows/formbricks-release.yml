@@ -10,7 +10,7 @@ permissions:
 jobs:
   check-latest-release:
     name: Check if this is the latest release
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER == 'github' && 'ubuntu-24.04' || 'blacksmith-2vcpu-ubuntu-2404' }}
     timeout-minutes: 5
     permissions:
       contents: read
@@ -120,7 +120,7 @@ jobs:
 
   verify-cloud-build:
     name: Verify Cloud Build Outputs
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER == 'github' && 'ubuntu-24.04' || 'blacksmith-2vcpu-ubuntu-2404' }}
     timeout-minutes: 5 # Simple verification should be quick
     needs:
       - docker-build-cloud
@@ -158,7 +158,7 @@ jobs:
 
   update-helm-app-version:
     name: Create Helm app version update
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER == 'github' && 'ubuntu-24.04' || 'blacksmith-2vcpu-ubuntu-2404' }}
     timeout-minutes: 5
     needs:
       - docker-build-community
@@ -267,7 +267,7 @@ jobs:
 
   linear-release-complete:
     name: Mark Linear release as complete
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.CI_RUNNER_PROVIDER == 'github' && 'ubuntu-24.04' || 'blacksmith-2vcpu-ubuntu-2404' }}
     timeout-minutes: 5
     # Published artifacts only, and only jobs that always run for a stable release.
     #
